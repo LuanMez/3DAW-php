@@ -1,30 +1,53 @@
-</head>
-<body>
 <?php
-            $id = $_POST['id'];
-            $quantidade = $_POST['quantidade'];
-            $valor = $_POST['valor'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $quantidades = $_POST['quantidade'];
+    
+    // Se o arquivo não existir...
+    if (!file_exists("carrinho.txt")) {
+        // ... criar um arquivo com o cabeçalho
+        $arqCarrinho = fopen("carrinho.txt", "w");
+        $cabecalho = "id: quantidade: valor:\n";
+        fwrite($arqCarrinho, $cabecalho);
+    } else {
+        $arqCarrinho = fopen("carrinho.txt", "a");
+    }
 
-            $texto = $id. ";" .
-            $quantidade .  ";" . $valor . ";";
+    foreach ($quantidades as $id => $quantidade) {
+        if ($quantidade > 0) {
+            $valor = 0;
 
-            // Se o arquivo não existir...
-            if(!file_exists("carrinho.txt") {
-            // ... criar um arquivo com o cabeçalho
-                $arqCarrinho = fopen("carrinho.txt", "w");
-                $cabecalho = "id: valor: quantidade:";
-                fwrite($arqCarrinho;$cabecalho);
-                fwrite($arqCarrinho;$texto);
-            } else {
-                $arqAluno = fopen("carrinho.txt", "a");
-              fwrite($arqCarrinho, $texto);
+            // Defina o preço com base no ID do produto
+            switch ($id) {
+                case 1:
+                    $valor = 100.00;
+                    break;
+                case 2:
+                    $valor = 200.00;
+                    break;
+                case 3:
+                    $valor = 300.00;
+                    break;
+                case 4:
+                    $valor = 500.00;
+                    break;
+                case 5:
+                    $valor = 50.00;
+                    break;
+                case 6:
+                    $valor = 75.00;
+                    break;
             }
-            fclose($arqCarrinho);
-            echo "Deu tudo certo";
-            }
+
+            $texto = $id . ";" . $quantidade . ";" . $valor . ";\n";
+            fwrite($arqCarrinho, $texto);
+        }
+    }
+
+    fclose($arqCarrinho);
+    echo "Produto(s) adicionado(s) ao carrinho com sucesso.";
+} else {
+    echo "Nenhum produto foi adicionado ao carrinho.";
+}
 ?>
- <a href="index.php">
-                Voltar para o menu
-            </a>
-</body>
-</html>
+<br>
+<a href="index.php">Voltar para o menu</a>
