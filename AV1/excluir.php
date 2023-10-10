@@ -1,28 +1,31 @@
-  <?php
-    $id= "";
-    $quantidade= "";
-    $valor= "";
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_excluir'])) {
+    $id_excluir = $_POST['id_excluir'];
+
     $arqCarrinho = fopen("carrinho.txt", "r") or die("Erro ao abrir arquivo");
-    $arqDisc = fopen("carrinhoNovo.txt", "w") or die("Erro ao abrir arquivo");
-    $x = 0;
-    $linha[] = fgets($arqAluno);
+    $arqCarrinhoNovo = fopen("carrinhoNovo.txt", "w") or die("Erro ao abrir arquivo");
 
-     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $procurar = $_POST["procurar"]
+    while (!feof($arqCarrinho)) {
+        $linha = fgets($arqCarrinho);
+        $colunaDados = explode(";", $linha);
+        $id = trim($colunaDados[0]);
 
-        while(!feof($arqCarrinho){
+        if ($id != $id_excluir) {
+            fwrite($arqCarrinhoNovo, $linha);
+        }
+    }
 
-        $linha[] = fgets($arqCarrinho);
-        $colunaDados = explode(";", $linha[$x]);
-        $id = $colunaDados[0];
+    fclose($arqCarrinho);
+    fclose($arqCarrinhoNovo);
 
-        if()
+    // Remova o arquivo antigo e renomeie o novo arquivo para o nome original
+    unlink("carrinho.txt");
+    rename("carrinhoNovo.txt", "carrinho.txt");
 
-        $quantidade = $colunaDados[1];
-        $valor = $colunaDados[2];
-
-        $texto = $id ";" .
-        $quantidade  ";" . $valor ";";
-          fwrite($arqCarrinho, $texto);
-          fclose($arqCarrinho);
-  ?>
+    echo "Produto excluído com sucesso.";
+} else {
+    echo "Nenhum produto foi excluído.";
+}
+?>
+<br>
+<a href="listar.php">Voltar para a lista de produtos</a>
