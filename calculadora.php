@@ -4,6 +4,25 @@
     $resultado = 0;
     $calculo = 'Adicao';
 
+    function somar($valor1, $valor2) {
+        return $valor1 + $valor2;
+    }
+
+    function subtrair($valor1, $valor2) {
+        return $valor1 - $valor2;
+    }
+
+    function multiplicar($valor1, $valor2) {
+        return $valor1 * $valor2;
+    }
+
+    function dividir($valor1, $valor2) {
+        if ($valor2 == 0) {
+            return "Divisão por zero não é permitida.";
+        }
+        return $valor1 / $valor2;
+    }
+
     if (isset($_GET["valor1"]) && isset($_GET["valor2"]) && isset($_GET["calculo"])) {
         $valor1 = $_GET["valor1"];
         $valor2 = $_GET["valor2"];
@@ -11,22 +30,23 @@
             
         switch ($calculo) {
             case 'Adicao':
-                 $resultado = $valor1 + $valor2;
-                 break;
+                $resultado = somar($valor1, $valor2);
+                break;
 
             case 'Subtracao':
-                 $resultado = $valor1 - $valor2;
+                $resultado = subtrair($valor1, $valor2);
                 break;
 
             case 'Multiplicacao':
-                $resultado = $valor1 * $valor2;
+                $resultado = multiplicar($valor1, $valor2);
                 break;
 
             case 'Divisao':
-                $resultado = $valor1 / $valor2;
+                $resultado = dividir($valor1, $valor2);
+                break;
             }
     }
-?>
+?>>
 
 <!DOCTYPE html>
 <html>
