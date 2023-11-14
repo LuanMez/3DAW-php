@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Calculado de Subtração</title>
+    <script>
+        function subtracao(){
+            let x=document.getElementById("x").value;
+            let y=document.getElementById("y").value;
+            console.log("x: " + x + "y: " + y);
+            let resultado = Number(x) - Number(y);
+            console.log("resultado: "+resultado);
+            document.getElementById("resultado").innerText="resultado:"+resultado;
+            
+}
+    </script>
+</head>
+<body>
+    <div id="subtracao">
+        <input type="number" id="x"> -
+        <input type="number" id="y"> =
+        <span id="resultado"></span>
+        <button id="buttonSub" value="subtracao" onclick="subtracao()">subtracao</button>
+    </div>
+</body>
+</html>
